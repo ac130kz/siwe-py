@@ -184,8 +184,8 @@ class SiweMessage(BaseModel):
         :return: EIP-4361 formatted message, ready for EIP-191 signing.
         """
         header = f"{self.domain} wants you to sign in with your Ethereum account:"
-
-        uri_field = f"URI: {self.uri}"
+        
+        uri_field = f"URI: {self.uri}" if self.uri.endswith("/") else f"URI: {self.uri}/"
 
         prefix = "\n".join([header, self.address])
 
