@@ -57,7 +57,7 @@ Parsing and verifying a `SiweMessage` is easy:
 try:
     message: SiweMessage = SiweMessage(message=eip_4361_string)
     message.verify(signature, nonce="abcdef", domain="example.com"):
-except siwe.ValueError:
+except ValueError:
     # Invalid message
     print("Authentication attempt rejected.")
 except siwe.ExpiredMessage:
