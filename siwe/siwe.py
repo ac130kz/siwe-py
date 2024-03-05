@@ -101,7 +101,8 @@ class VersionEnum(str, Enum):
 
 
 def _iso8601_format(value: datetime) -> str:
-    return value.isoformat().replace("+00:00", ".000Z")
+    """Convert to a JavaScript like ISO8601 compatible date, should not fail."""
+    return value.utcnow().isoformat()[:-3] + "Z"
 
 
 class SiweMessage(BaseModel):
