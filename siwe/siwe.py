@@ -125,11 +125,11 @@ class SiweMessage(BaseModel):
     """RFC 3986 URI referring to the resource that is the subject of the signing."""
     version: VersionEnum
     """Current version of the message."""
-    chain_id: int = Field(gt=0)
+    chain_id: int = Field(..., gt=0, validation_alias="chainID")
     """EIP-155 Chain ID to which the session is bound, and the network where Contract
     Accounts must be resolved.
     """
-    issued_at: CustomDateTime
+    issued_at: CustomDateTime = Field(..., validation_alias="issuedAt")
     """ISO 8601 datetime string of the current time."""
     nonce: str = Field(min_length=8)
     """Randomized token used to prevent replay attacks, at least 8 alphanumeric
