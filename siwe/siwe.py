@@ -14,6 +14,7 @@ from pydantic import (
     AnyUrl,
     BaseModel,
     Field,
+    AliasChoices,
     NonNegativeInt,
     ValidationError,
     field_validator,
@@ -118,11 +119,11 @@ class SiweMessage(BaseModel):
     """RFC 3986 URI referring to the resource that is the subject of the signing."""
     version: VersionEnum
     """Current version of the message."""
-    chain_id: NonNegativeInt = Field(..., validation_alias="chainId")
+    chain_id: NonNegativeInt = Field(..., validation_alias=AliasChoices("chain_id", "chainId", "chainID"))
     """EIP-155 Chain ID to which the session is bound, and the network where Contract
     Accounts must be resolved.
     """
-    issued_at: datetime = Field(..., validation_alias="issuedAt")
+    issued_at: datetime = Field(..., validation_alias=AliasChoices("issued_at", "issuedAt"))
     """ISO 8601 datetime string of the current time."""
     nonce: str = Field(min_length=8)
     """Randomized token used to prevent replay attacks, at least 8 alphanumeric
@@ -133,15 +134,15 @@ class SiweMessage(BaseModel):
     """Human-readable ASCII assertion that the user will sign, and it must not contain
     `\n`.
     """
-    expiration_time: Optional[datetime] = Field(None, validation_alias="expirationTime")
+    expiration_time: Optional[datetime] = Field(None, validation_alias=AliasChoices("expiration_time", "expirationTime"))
     """ISO 8601 datetime string that, if present, indicates when the signed
     authentication message is no longer valid.
     """
-    not_before: Optional[datetime] = Field(None, validation_alias="notBefore")
+    not_before: Optional[datetime] = Field(None, validation_alias=AliasChoices("not_before", "notBefore"))
     """ISO 8601 datetime string that, if present, indicates when the signed
     authentication message will become valid.
     """
-    request_id: Optional[str] = Field(None, validation_alias="requestId")
+    request_id: Optional[str] = Field(None, validation_alias=AliasChoices("request_id", "requestId"))
     """System-specific identifier that may be used to uniquely refer to the sign-in
     request.
     """
