@@ -187,7 +187,7 @@ class SiweMessage(BaseModel):
         """
         header = f"{self.domain} wants you to sign in with your Ethereum account:"
         
-        uri_field = f"URI: {self.uri}" if f"{self.uri}".endswith("/") else f"URI: {self.uri}/"
+        uri_field = f"URI: {self.uri}"
 
         prefix = "\n".join([header, self.address])
 
