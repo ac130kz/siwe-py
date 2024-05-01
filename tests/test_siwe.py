@@ -25,13 +25,12 @@ with open(BASE_TESTS + "eip1271.json", "r") as f:
 
 
 class TestMessageParsing:
-    @pytest.mark.parametrize("abnf", [True, False])
     @pytest.mark.parametrize(
         "test_name,test",
         [(test_name, test) for test_name, test in parsing_positive.items()],
     )
-    def test_valid_message(self, abnf, test_name, test):
-        siwe_message = SiweMessage(message=test["message"], abnf=abnf)
+    def test_valid_message(self, test_name, test):
+        siwe_message = SiweMessage(message=test["message"])
         for key, value in test["fields"].items():
             v = getattr(siwe_message, key)
             if isinstance(v, datetime):
@@ -40,14 +39,13 @@ class TestMessageParsing:
                 v = str(v)
             assert v == value
 
-    @pytest.mark.parametrize("abnf", [True, False])
     @pytest.mark.parametrize(
         "test_name,test",
         [(test_name, test) for test_name, test in parsing_negative.items()],
     )
-    def test_invalid_message(self, abnf, test_name, test):
+    def test_invalid_message(self, test_name, test):
         with pytest.raises(ValueError):
-            SiweMessage(message=test, abnf=abnf)
+            SiweMessage(message=test)
 
     @pytest.mark.parametrize(
         "test_name,test",

@@ -22,7 +22,7 @@ from pydantic import (
 from web3 import HTTPProvider, Web3
 from web3.exceptions import BadFunctionCallOutput
 
-from .parsed import ABNFParsedMessage, RegExpParsedMessage
+from .parsed import RegExpParsedMessage
 
 EIP1271_CONTRACT_ABI = [
     {
@@ -160,13 +160,10 @@ class SiweMessage(BaseModel):
             raise ValueError("Message `address` must be in EIP-55 format")
         return v
 
-    def __init__(self, message: Union[str, Dict[str, Any]], abnf: bool = True):
+    def __init__(self, message: Union[str, Dict[str, Any]]):
         """Construct or parse a message."""
         if isinstance(message, str):
-            if abnf:
-                parsed_message = ABNFParsedMessage(message=message)
-            else:
-                parsed_message = RegExpParsedMessage(message=message)
+            parsed_message = RegExpParsedMessage(message=message)
             message_dict = parsed_message.__dict__
         elif isinstance(message, dict):
             message_dict = message
